@@ -3,8 +3,9 @@ import torchvision.datasets
 from torch import nn
 from torch.nn import Conv2d
 from torch.utils.data import DataLoader
+from torch.utils.tensorboard import SummaryWriter
 
-dataset = torchvision.datasets.CIFAR10("../dataset", train=False, transform= torchvision.transforms.ToTensor(), download= False)
+dataset = torchvision.datasets.CIFAR10("../dataset", train=False, transform= torchvision.transforms.ToTensor(), download= True)
 dataloader = DataLoader(dataset, batch_size=64)
 
 class Wxconv2d(nn.Module):
@@ -18,7 +19,15 @@ class Wxconv2d(nn.Module):
 
 wxconv2d = Wxconv2d()
 
-"""for data in dataloader:
+writer = SummaryWriter("../logs_2")
+
+step = 0
+for data in dataloader:
     imgs, targets = data
     output = wxconv2d(imgs)
-"""
+    writer.add_images("input",imgs,step)
+    output = torch.reshape(output, (-1,3,30,30))
+    writer.add_images("output", output,step)
+    step = step + 1
+
+writer.close()
