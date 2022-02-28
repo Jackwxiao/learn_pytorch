@@ -17,7 +17,7 @@ for epoch in range(2):
     step = 0
     for data in test_loader:
         imgs, targets = data
-        writer.add_images("Epoch{}.format(epoch)",imgs, step)
+        writer.add_images("Epoch{}".format(epoch),imgs, step)
         step = step + 1
 
 writer.close()
