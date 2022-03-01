@@ -11,6 +11,7 @@ dataloader = DataLoader(dataset,batch_size=64)
 class Wxiao(nn.Module):
     def __init__(self):
         super(Wxiao, self).__init__()
+        # 池化过程中，对于不足核尺寸的ceil_mode为true时保留，为false时丢弃
         self.maxpool1 = MaxPool2d(kernel_size=3,ceil_mode=False)
 
     def forward(self, input):
