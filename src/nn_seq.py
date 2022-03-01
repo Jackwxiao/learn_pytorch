@@ -1,6 +1,7 @@
 import torch
 from torch import nn
 from torch.nn import Conv2d, MaxPool2d, Flatten, Linear, Sequential
+from torch.utils.tensorboard import SummaryWriter
 
 
 class Wxiao(nn.Module):
@@ -27,3 +28,8 @@ print(wxiao)
 input = torch.ones((64, 3, 32, 32))
 output = wxiao(input)
 print(output.shape)
+
+writer = SummaryWriter("../logs_seq")
+writer.add_graph(wxiao, input)
+writer.close()
+# 终端输入命令：  tensorboard --logdir=logs_seq 打开tensorboard 面板查看效果展示
